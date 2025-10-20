@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title> Todo App</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { padding: 8px; width: 200px; }
+    button { padding: 8px; margin-left: 5px; }
+    li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h2> Todo App</h2>
+  <input id="taskInput" placeholder="Enter task..." />
+  <button onclick="addTask()">Add</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    const input = document.getElementById('taskInput');
+    const list = document.getElementById('taskList');
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function render() {
+      list.innerHTML = '';
+      tasks.forEach((t, i) => {
+        list.innerHTML += `<li>${t} 
+          <button onclick="removeTask(${i})">Delete</button></li>`;
+      });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function addTask() {
+      const task = input.value.trim();
+      if (!task) return alert('Enter a task!');
+      tasks.push(task);
+      input.value = '';
+      render();
+    }
+
+    function removeTask(i) {
+      tasks.splice(i, 1);
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title> Calculator</title>
+  <style>
+    input, button { font-size: 18px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2> Calculator</h2>
+  <input id="num1" type="number" placeholder="Num 1">
+  <input id="num2" type="number" placeholder="Num 2"><br>
+  <button onclick="calc('+')">+</button>
+  <button onclick="calc('-')">-</button>
+  <button onclick="calc('*')">*</button>
+  <button onclick="calc('/')">/</button>
+  <h3 id="result"></h3>
+
+  <script>
+    function calc(op) {
+      const n1 = parseFloat(document.getElementById('num1').value);
+      const n2 = parseFloat(document.getElementById('num2').value);
+      let res;
+      switch(op) {
+        case '+': res = n1 + n2; break;
+        case '-': res = n1 - n2; break;
+        case '*': res = n1 * n2; break;
+        case '/': res = n1 / n2; break;
+      }
+      document.getElementById('result').innerText = "Result: " + res;
+    }
+  </script>
+</body>
+</html>
