@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Algorithm Example</title>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+  <h2>Algorithm Demo</h2>
+  <button onclick="showSorted()">Sort Orders</button>
+  <button onclick="searchOrder()">Search Order</button>
+  <button onclick="startCountdown()">Countdown</button>
+  <button onclick="checkDelivery()">Delivery Estimate</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const output = document.getElementById("output");
+
+    const orders = [
+      { id: 3, name: "Burger", time: 15 },
+      { id: 1, name: "Pizza", time: 10 },
+      { id: 2, name: "Pasta", time: 12 },
+    ];
+
+    //  Sorting (by delivery time)
+    function showSorted() {
+      const sorted = [...orders].sort((a, b) => a.time - b.time);
+      output.textContent += " Sorted Orders:\n";
+      sorted.forEach(o => output.textContent += `${o.name} - ${o.time} mins\n`);
+      output.textContent += "\n";
+    }
+
+    //  Searching (by order ID)
+    function searchOrder() {
+      const id = 2;
+      const result = orders.find(o => o.id === id);
+      if (result)
+        output.textContent += ` Found Order: ${result.name} (ID: ${result.id})\n\n`;
+      else
+        output.textContent += " Order not found\n\n";
+    }
+
+    //  Recursion (countdown)
+    function countdown(time) {
+      if (time === 0) {
+        output.textContent += " Delivered!\n\n";
+        return;
+      }
+      output.textContent += ` ${time} min left...\n`;
+      setTimeout(() => countdown(time - 1), 500);
+    }
+
+    function startCountdown() {
+      output.textContent += " Starting delivery:\n";
+      countdown(3);
+    }
+
+    //  Dynamic Programming (cache delivery time)
+    const cache = {};
+    function deliveryEstimate(distance) {
+      if (cache[distance]) return cache[distance];
+      cache[distance] = distance * 2; // 2 mins per km
+      return cache[distance];
+    }
+
+    function checkDelivery() {
+      const dist = 5;
+      const time = deliveryEstimate(dist);
+      output.textContent += ` Delivery time for ${dist} km = ${time} mins\n\n`;
+    }
+  </script>
+</body>
+</html>
